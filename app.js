@@ -1,32 +1,28 @@
-import axios from "axios"
+import axios from "axios";
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Hello, World!");
-
     const form = document.querySelector("form");
-    document.querySelector("input").focus()
-    const usernames = []
-    console.log(form);
+    document.querySelector("input").focus();
+    const usernames = [];
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
         const username = document.querySelector("input").value;
 
-        if(!username){
-          alert('Enter a username')
-          return
+        if (!username) {
+            alert("Enter a username");
+            return;
         }
 
         if (usernames.includes(username)) {
-          alert("You already searched for this")
-          return
+            alert("You already searched for this");
+            return;
         }
 
-        usernames.push(username)
+        usernames.push(username);
 
-        let response = ""
+        let response = "";
         try {
             response = await axios.get(`https://api.github.com/users/${username}`);
-            
         } catch (error) {
             if (404 === error.response.status) {
                 alert("Username not found");
@@ -39,13 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response) {
             const card = createCard(response.data);
             document.querySelector("#container").insertAdjacentHTML("afterbegin", card);
-            document.querySelector("input").value = ""
-            document.querySelector("input").focus()
-            
+            document.querySelector("input").value = "";
+            document.querySelector("input").focus();
         }
     });
-    
-})
+});
 
 const createCard = (data) => `
   <div class="px-4 py-5 sm:px-6 -ml-4 -mt-4 border-b border-gray-200 pb-8 flex justify-between items-center flex-wrap sm:flex-no-wrap">
@@ -62,9 +56,7 @@ const createCard = (data) => `
             </span>
           </h3>
           <p class="text-sm leading-5 text-gray-500">
-            ${
-              data.public_repos
-            } repositories. User since ${data.created_at.slice(0, 4)}
+            ${data.public_repos} repositories. User since ${data.created_at.slice(0, 4)}
           </p>
           <p class="text-sm leading-5 text-gray-500">
             ${data.location || ""}
@@ -78,7 +70,7 @@ const createCard = (data) => `
     <div class="ml-4 mt-4 flex-shrink-0 flex">
       <span class="ml-3 inline-flex rounded-md shadow-sm">
         <a href="${
-          data.html_url
+            data.html_url
         }"><button type="button" class="mr-2 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800">
           <span>
             Profile
@@ -86,7 +78,7 @@ const createCard = (data) => `
         </button>
         </a>
         <a href="${
-          data.blog
+            data.blog
         }"><button type="button" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-50 active:text-gray-800">
           <span>
             Website
@@ -96,4 +88,4 @@ const createCard = (data) => `
       </span>
     </div>
   </div>
-`
+`;

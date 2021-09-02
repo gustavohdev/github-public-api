@@ -1925,17 +1925,15 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Hello, World!");
   const form = document.querySelector("form");
   document.querySelector("input").focus();
   const usernames = [];
-  console.log(form);
   form.addEventListener("submit", async event => {
     event.preventDefault();
     const username = document.querySelector("input").value;
 
     if (!username) {
-      alert('Enter a username');
+      alert("Enter a username");
       return;
     }
 
