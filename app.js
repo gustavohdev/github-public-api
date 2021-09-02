@@ -1,18 +1,49 @@
 import axios from "axios"
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Hello, World!")
+    console.log("Hello, World!");
 
-    const form = document.querySelector("form")
-    console.log(form)
+    const form = document.querySelector("form");
+    document.querySelector("input").focus()
+    const usernames = []
+    console.log(form);
     form.addEventListener("submit", async (event) => {
-        event.preventDefault()
-        const username = document.querySelector("input").value
-        const response = await axios.get(`https://api.github.com/users/${username}`)
-        const card = createCard(response.data) 
-        
-        document.querySelector("#container").insertAdjacentHTML("beforeend", card)
-    })
+        event.preventDefault();
+        const username = document.querySelector("input").value;
+
+        if(!username){
+          alert('Enter a username')
+          return
+        }
+
+        if (usernames.includes(username)) {
+          alert("You already searched for this")
+          return
+        }
+
+        usernames.push(username)
+
+        let response = ""
+        try {
+            response = await axios.get(`https://api.github.com/users/${username}`);
+            
+        } catch (error) {
+            if (404 === error.response.status) {
+                alert("Username not found");
+            } else {
+                alert("Error");
+                console.log(error.response);
+            }
+        }
+
+        if (response) {
+            const card = createCard(response.data);
+            document.querySelector("#container").insertAdjacentHTML("afterbegin", card);
+            document.querySelector("input").value = ""
+            document.querySelector("input").focus()
+            
+        }
+    });
     
 })
 
