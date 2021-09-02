@@ -1,6 +1,6 @@
 # Requirements
--make sure your port 3000 is free
--open a terminal
+- make sure your port 3000 is free
+- open a terminal
 
 ```sh
 npm i
@@ -20,6 +20,6 @@ parcel watch app.js
 browser-sync start --server --files '.'
 ```
 
-# You should see the application running now, Congrats ! :)
+## _You should see the application running now, Congrats ! :)_
 
 
